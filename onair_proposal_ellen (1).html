@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnAir Studio — Ellen McDonald</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ANIMATIONS */
+.anim{opacity:0;transform:translateY(36px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.anim.visible{opacity:1;transform:translateY(0)}
+.anim-scale{opacity:0;transform:scale(.93);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.anim-scale.visible{opacity:1;transform:scale(1)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.40s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:130px 40px 90px;position:relative;overflow:hidden;background:#0a0a0a}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 75% 55% at 50% 45%,rgba(201,168,76,.09) 0%,transparent 70%);animation:glow 5s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:.6}50%{opacity:1}}
+
+  /* ONAIR LOGO */
+.logo-img{height:46px;margin-bottom:52px;opacity:0;animation:fadeUp .9s ease .15s forwards}
+.logo-footer{height:24px;opacity:.18;margin-bottom:14px;filter:brightness(10)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.hero-tag{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#c9a84c;margin-bottom:28px;opacity:0;animation:fadeUp .9s ease .35s forwards}
+.hero h1{font-size:clamp(32px,5.5vw,64px);font-weight:700;line-height:1.07;letter-spacing:-.03em;max-width:800px;margin-bottom:22px;opacity:0;animation:fadeUp .9s ease .55s forwards}
+.hero h1 em{font-style:normal;color:#c9a84c}
+.hero-sub{font-size:17px;color:#737373;max-width:500px;margin-bottom:46px;line-height:1.75;opacity:0;animation:fadeUp .9s ease .75s forwards}
+.platforms{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .9s ease .95s forwards}
+.pbadge{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#555;border:1px solid #222;padding:8px 18px;border-radius:100px;display:flex;align-items:center;gap:8px;transition:border-color .3s,color .3s,transform .25s;cursor:default}
+.pbadge:hover{border-color:#c9a84c;color:#c9a84c;transform:translateY(-2px)}
+.pi{width:15px;height:15px;flex-shrink:0}
+.scroll-hint{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.22em;color:#2a2a2a;text-transform:uppercase;animation:bob 2.2s ease infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* LAYOUT */
+hr.div{border:none;border-top:1px solid #1a1a1a}
+section{padding:96px 40px;max-width:1080px;margin:0 auto}
+.stag{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#c9a84c;margin-bottom:18px;display:block}
+.stitle{font-size:clamp(26px,3.8vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.025em;margin-bottom:16px}
+.ssub{font-size:15px;color:#737373;max-width:560px;line-height:1.75;margin-bottom:52px}
+
+/* PROBLEM */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#1c1c1c;border:1px solid #1c1c1c;border-radius:14px;overflow:hidden;margin-top:52px}
+.pitem{background:#0e0e0e;padding:36px;transition:background .25s}
+.pitem:hover{background:#131313}
+.pitem .ico{font-size:20px;margin-bottom:12px;opacity:.35}
+.pitem h3{font-size:14px;font-weight:600;margin-bottom:7px}
+.pitem p{font-size:13px;color:#666;line-height:1.7}
+
+/* VOLUMES */
+.vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
+.vcard{background:#0d0d0d;border:1px solid #1c1c1c;border-radius:20px;padding:32px 20px 28px;text-align:left;transition:border-color .4s,transform .35s,box-shadow .35s;position:relative;overflow:hidden}
+.vcard::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.04) 0%,transparent 60%);pointer-events:none}
+.vcard:hover{border-color:#c9a84c;transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.5)}
+.vcard-icon{width:40px;height:40px;margin-bottom:20px;display:flex;align-items:center;justify-content:center}
+.vnum{font-size:52px;font-weight:900;letter-spacing:-.05em;line-height:1;color:#fff;margin-bottom:0}
+.vunit{font-size:10px;color:#c9a84c;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-top:4px;margin-bottom:12px;display:block}
+.vlabel{font-size:12px;color:#555;line-height:1.55;border-top:1px solid #1a1a1a;padding-top:12px;margin-top:4px}
+
+/* FORMATS */
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
+.fcard{border:1px solid #1c1c1c;border-radius:14px;padding:34px 26px;background:#0d0d0d;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.fcard:hover{border-color:#2e2e2e;transform:translateY(-5px)}
+.fcard::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);opacity:0;transition:opacity .3s}
+.fcard:hover::after{opacity:1}
+.fnum{font-size:42px;font-weight:800;color:#181818;line-height:1;margin-bottom:18px;letter-spacing:-.04em}
+.flabel{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:9px;display:block}
+.fcard h3{font-size:18px;font-weight:700;margin-bottom:12px;letter-spacing:-.02em}
+.fcard p{font-size:13px;color:#666;line-height:1.7;margin-bottom:18px}
+.fmeta span{font-size:11px;color:#444;display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.fmeta span::before{content:'—';color:#c9a84c;font-size:9px}
+
+/* STUDIO */
+.svis{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#1a1a1a;border-radius:14px;overflow:hidden;margin-top:52px}
+.szone{background:#0d0d0d;padding:40px 34px;transition:background .25s}
+.szone:hover{background:#101010}
+.szone.wide{grid-column:1/-1;padding:52px;display:flex;justify-content:space-between;align-items:center;gap:36px}
+.sztag{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:9px;display:block}
+.szone h3{font-size:19px;font-weight:700;margin-bottom:9px;letter-spacing:-.02em}
+.szone p{font-size:13px;color:#666;line-height:1.7;max-width:460px}
+.zstat{text-align:right;flex-shrink:0}
+.zstat .big{font-size:52px;font-weight:800;letter-spacing:-.04em;color:#c9a84c;line-height:1}
+.zstat small{font-size:10px;color:#333;letter-spacing:.1em;text-transform:uppercase;display:block;margin-top:3px}
+
+/* INCLUDED */
+.igrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#1c1c1c;border:1px solid #1c1c1c;border-radius:14px;overflow:hidden;margin-top:52px}
+.iblock{background:#0d0d0d;padding:34px;transition:background .25s}
+.iblock:hover{background:#111}
+.iblock h3{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c9a84c;margin-bottom:18px}
+.ilist{list-style:none}
+.ilist li{font-size:13px;color:#d4d4d4;display:flex;align-items:flex-start;gap:9px;line-height:1.5;margin-bottom:9px}
+.ilist li::before{content:'✓';color:#c9a84c;font-weight:700;font-size:11px;flex-shrink:0;margin-top:1px}
+
+/* PRICING */
+.pwrap{max-width:660px;margin:52px auto 0}
+.pcard{border:1px solid #252525;border-radius:18px;padding:52px;background:#0d0d0d;text-align:center;position:relative;overflow:hidden;transition:border-color .3s}
+.pcard:hover{border-color:#333}
+.pcard::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,#c9a84c,transparent)}
+.pamount{font-size:72px;font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:5px}
+.pamount sup{font-size:28px;font-weight:400;vertical-align:super;color:#c9a84c}
+.pperiod{font-size:12px;color:#555;letter-spacing:.1em;text-transform:uppercase;margin-bottom:32px}
+.popts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+.popt{border:1px solid #222;border-radius:10px;padding:20px;text-align:left;transition:border-color .3s}
+.popt:hover{border-color:#3a3a3a}
+.popt h4{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#c9a84c;margin-bottom:6px}
+.popt p{font-size:12px;color:#555;line-height:1.5}
+
+/* WORKFLOW */
+.wlist{display:flex;flex-direction:column;margin-top:52px;max-width:660px}
+.witem{display:flex;gap:26px;align-items:flex-start;padding:32px 0;border-bottom:1px solid #181818;transition:padding-left .3s}
+.witem:hover{padding-left:10px}
+.witem:last-child{border-bottom:none}
+.wnum{font-size:10px;font-weight:700;color:#c9a84c;letter-spacing:.1em;flex-shrink:0;padding-top:2px;width:26px}
+.wcontent h3{font-size:16px;font-weight:600;margin-bottom:5px;letter-spacing:-.01em}
+.wcontent p{font-size:13px;color:#555;line-height:1.7}
+
+/* CTA */
+.cta{text-align:center;padding:112px 40px;position:relative;overflow:hidden;background:#0a0a0a}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 50% 50%,rgba(201,168,76,.06) 0%,transparent 70%);animation:glow 6s ease infinite}
+.cta-label{font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:#c9a84c;margin-bottom:20px;display:block}
+.cta-title{font-size:clamp(28px,4.5vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.06;max-width:620px;margin:0 auto 16px}
+.cta-sub{font-size:15px;color:#737373;margin-bottom:40px}
+.cta-btn{display:inline-block;background:#c9a84c;color:#0a0a0a;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:15px 42px;border-radius:100px;text-decoration:none;position:relative;z-index:1;transition:transform .25s,background .25s}
+.cta-btn:hover{transform:scale(1.05);background:#e8c97a}
+
+/* FOOTER */
+.footer{background:#060606;border-top:1px solid #151515;padding:64px 40px;text-align:center}
+.footer-logo{height:26px;opacity:.2;margin-bottom:14px}
+.footer-tag{font-size:12px;color:#2a2a2a;margin-bottom:28px}
+.footer-links{display:flex;gap:32px;justify-content:center;flex-wrap:wrap}
+.footer-links a{font-size:12px;color:#444;text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:#c9a84c}
+.footer-copy{margin-top:40px;font-size:11px;color:#1a1a1a}
+
+@media(max-width:720px){
+  .pgrid,.fgrid,.igrid,.svis,.popts,.vgrid{grid-template-columns:1fr}
+  .szone.wide{flex-direction:column}
+  .zstat{text-align:left}
+  section{padding:60px 20px}
+  .hero{padding:100px 20px 70px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+
+  <div style="font-size:13px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:white;margin-bottom:52px;opacity:0;animation:fadeUp .9s ease .15s forwards">ONAIR STUDIO</div>
+
+  <div class="hero-tag">Commercial Proposal · Prepared for Ellen McDonald</div>
+  <h1>Your real estate brand,<br><em>built for the media age.</em></h1>
+  <p class="hero-sub">We turn your Airbnb expertise into a monthly content engine — podcasts, YouTube, Instagram, TikTok — produced in Bali's leading personal brand studio.</p>
+
+  <div class="platforms">
+    <!-- YouTube -->
+    <span class="pbadge">
+      <svg class="pi" viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#FF0000"/><polygon points="9.5,7 9.5,17 17,12" fill="white"/></svg>
+      YouTube
+    </span>
+    <!-- Instagram -->
+    <span class="pbadge">
+      <svg class="pi" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="5.5" y="5.5" width="13" height="13" rx="4" stroke="white" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="3.2" stroke="white" stroke-width="1.5" fill="none"/><circle cx="17.2" cy="6.8" r=".9" fill="white"/></svg>
+      Instagram
+    </span>
+    <!-- TikTok -->
+    <span class="pbadge">
+      <svg class="pi" viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#010101"/><path d="M17 5.5a3.5 3.5 0 01-3.5-3.5h-2.5v11a1.8 1.8 0 11-1.5-1.77V8.6a4.3 4.3 0 100 8.6 4.3 4.3 0 004.3-4.3V9.3a6 6 0 003.2.93V7.7A3.5 3.5 0 0117 5.5z" fill="white"/></svg>
+      TikTok
+    </span>
+    <!-- Podcast -->
+    <span class="pbadge">
+      <svg class="pi" viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#9b59b6"/><rect x="9" y="3" width="6" height="11" rx="3" fill="white"/><path d="M5 11a7 7 0 0014 0" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="12" y1="18" x2="12" y2="21" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="9" y1="21" x2="15" y2="21" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Podcast
+    </span>
+  </div>
+
+  <div class="scroll-hint">Scroll to explore ↓</div>
+</div>
+
+<hr class="div">
+
+<!-- PROBLEM -->
+<section>
+  <span class="stag anim">ONAIR STUDIO · The challenge</span>
+  <h2 class="stitle anim d1">The Bali rental market<br>rewards visibility.</h2>
+  <p class="ssub anim d2">Clients and property owners choose people they trust. In 2025, trust is built through media — not business cards.</p>
+  <div class="pgrid">
+    <div class="pitem anim d1"><div class="ico">◎</div><h3>You're invisible online</h3><p>Without consistent media presence, potential clients find your competitors first — every time.</p></div>
+    <div class="pitem anim d2"><div class="ico">◎</div><h3>Deals go to the vocal</h3><p>In a crowded Airbnb market, the expert who shows up on video gets the inbound. Silence is ceded ground.</p></div>
+    <div class="pitem anim d3"><div class="ico">◎</div><h3>Expertise stays hidden</h3><p>Years of Bali rental experience doesn't convert if it's not captured and distributed to the right audience.</p></div>
+    <div class="pitem anim d4"><div class="ico">◎</div><h3>Trust starts from zero</h3><p>Without a media footprint, every new prospect requires building trust manually — slow and expensive.</p></div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- VOLUMES -->
+<section>
+  <span class="stag anim">ONAIR STUDIO · Monthly output</span>
+  <h2 class="stitle anim d1">A full content machine,<br>every month.</h2>
+  <p class="ssub anim d2">Up to 20 production hours per month. Studio days, location shoots, editing, strategy — all included.</p>
+  <div class="vgrid">
+    <!-- Podcast -->
+    <div class="vcard anim d1">
+      <div class="vcard-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <rect x="13" y="4" width="14" height="22" rx="7" stroke="#c9a84c" stroke-width="2"/>
+          <path d="M7 20C7 27.18 12.82 33 20 33C27.18 33 33 27.18 33 20" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+          <line x1="20" y1="33" x2="20" y2="38" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+          <line x1="14" y1="38" x2="26" y2="38" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+          <line x1="15" y1="13" x2="25" y2="13" stroke="#0a0a0a" stroke-width="1.5"/>
+          <line x1="15" y1="17" x2="25" y2="17" stroke="#0a0a0a" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="vnum">4</div>
+      <span class="vunit">episodes / mo</span>
+      <div class="vlabel">Long-form podcast<br>45–60 min · multi-camera</div>
+    </div>
+
+    <!-- YouTube -->
+    <div class="vcard anim d2">
+      <div class="vcard-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <!-- Custom play-screen icon -->
+          <rect x="3" y="9" width="34" height="22" rx="5" stroke="#c9a84c" stroke-width="2"/>
+          <polygon points="16,15 28,20 16,25" fill="#c9a84c"/>
+          <line x1="10" y1="35" x2="30" y2="35" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+          <!-- Shorts arrow down-right -->
+          <path d="M28 6 L34 6 L34 12" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="vnum">20</div>
+      <span class="vunit">YouTube Shorts / mo</span>
+      <div class="vlabel">Algorithm-optimised<br>vertical short-form</div>
+    </div>
+
+    <!-- Instagram -->
+    <div class="vcard anim d3">
+      <div class="vcard-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <!-- Phone frame vertical -->
+          <rect x="10" y="3" width="20" height="34" rx="5" stroke="#c9a84c" stroke-width="2"/>
+          <!-- Play button -->
+          <polygon points="17,14 27,20 17,26" fill="#c9a84c"/>
+          <!-- Reels lines bottom -->
+          <line x1="14" y1="31" x2="26" y2="31" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Camera notch top -->
+          <circle cx="20" cy="7" r="1.2" fill="#c9a84c"/>
+        </svg>
+      </div>
+      <div class="vnum">20</div>
+      <span class="vunit">Instagram Reels / mo</span>
+      <div class="vlabel">Hook-first vertical<br>content per platform</div>
+    </div>
+
+    <!-- TikTok -->
+    <div class="vcard anim d4">
+      <div class="vcard-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <!-- Double waveform = TikTok vibe -->
+          <path d="M8 28 C8 28 10 20 14 20 C18 20 18 28 22 28 C26 28 26 14 30 14 C32 14 33 18 34 20" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <!-- Music note -->
+          <circle cx="29" cy="30" r="3" stroke="#c9a84c" stroke-width="1.8" fill="none"/>
+          <line x1="32" y1="30" x2="32" y2="22" stroke="#c9a84c" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="32" y1="22" x2="37" y2="20" stroke="#c9a84c" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- Phone outline hint -->
+          <rect x="4" y="6" width="16" height="26" rx="4" stroke="#333" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="vnum">20</div>
+      <span class="vunit">TikTok Videos / mo</span>
+      <div class="vlabel">Hook-driven edits<br>built for discovery</div>
+    </div>
+  </div>
+
+  <!-- Total callout -->
+  <div class="anim d3" style="margin-top:20px;display:flex;align-items:center;gap:16px;padding:20px 28px;border:1px solid #1c1c1c;border-radius:14px;background:#0a0a0a">
+    <div style="font-size:32px;font-weight:900;letter-spacing:-.04em;color:#c9a84c;line-height:1">64</div>
+    <div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:3px">Units of content per month</div>
+      <div style="font-size:12px;color:#444">4 long-form episodes · 20 YouTube Shorts · 20 Reels · 20 TikTok videos</div>
+    </div>
+    <div style="margin-left:auto;font-size:11px;color:#2e2e2e;letter-spacing:.1em;text-transform:uppercase;text-align:right">Up to 20<br>production hrs</div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- FORMATS -->
+<section>
+  <span class="stag anim">ONAIR STUDIO · Content formats</span>
+  <h2 class="stitle anim d1">Three formats.<br>One cohesive system.</h2>
+  <p class="ssub anim d2">Each format serves a distinct function — trust-building, education, discovery — designed to work together.</p>
+  <div class="fgrid">
+    <div class="fcard anim d1">
+      <div class="fnum">01</div><span class="flabel">Long-form</span><h3>Podcast</h3>
+      <p>Deep-dive expert conversations. Property case studies, Airbnb tips, Bali market analysis — authority with every episode.</p>
+      <div class="fmeta"><span>45–60 minutes per episode</span><span>Multi-camera studio setup</span><span>Up to 4 episodes / month</span><span>YouTube primary distribution</span></div>
+    </div>
+    <div class="fcard anim d2">
+      <div class="fnum">02</div><span class="flabel">Mid-form</span><h3>Expert Episodes</h3>
+      <p>Concise expert videos — market analysis, FAQ answers, investor case studies. Backbone of your YouTube SEO strategy.</p>
+      <div class="fmeta"><span>Up to 30 minutes</span><span>Studio talking-head format</span><span>SEO titles & thumbnails</span><span>Included in the package</span></div>
+    </div>
+    <div class="fcard anim d3">
+      <div class="fnum">03</div><span class="flabel">Short-form</span><h3>Reels & Shorts</h3>
+      <p>Hook-driven vertical content adapted per platform. Maximum reach. Repurposed from long-form and original shoots.</p>
+      <div class="fmeta"><span>Up to 60 per month total</span><span>Hook engineered per platform</span><span>Subtitles included</span><span>CTA in every video</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- STUDIO -->
+<section>
+  <span class="stag anim">ONAIR STUDIO · Production setup</span>
+  <h2 class="stitle anim d1">Shot in Canggu.<br>Built for cinematic results.</h2>
+  <p class="ssub anim d2">70% studio production. 30% on-location at your properties across Bali.</p>
+  <div class="svis">
+    <div class="szone wide anim">
+      <div><span class="sztag">Primary studio · Canggu</span><h3>Premium podcast production</h3><p>Cinematic lighting, professional sound, branded set design. Full production crew. Sony FX3 primary camera.</p></div>
+      <div class="zstat"><div class="big">70<span style="font-size:26px;color:#2a2a2a">%</span></div><small>Studio shoots</small></div>
+    </div>
+    <div class="szone anim d1"><span class="sztag">On location</span><h3>Villa tours & lifestyle</h3><p>Drone footage, walkthroughs, b-roll, lifestyle cinematics on your properties.</p></div>
+    <div class="szone anim d2"><span class="sztag">Production crew</span><h3>Full team on every shoot</h3><p>Director, operator, sound engineer. Coordinated per monthly shoot schedule.</p></div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- INCLUDED -->
+<section>
+  <span class="stag anim">ONAIR STUDIO · What's included</span>
+  <h2 class="stitle anim d1">Everything done<br>for you.</h2>
+  <p class="ssub anim d2">You focus on your business. We handle the entire production and strategy cycle.</p>
+  <div class="igrid">
+    <div class="iblock anim d1"><h3>Production</h3><ul class="ilist"><li>Studio shooting days</li><li>On-location shoots (villa tours, drone, b-roll)</li><li>Camera, lighting & sound setup</li><li>Full production crew coordination</li><li>Up to 20 production hours / month</li></ul></div>
+    <div class="iblock anim d2"><h3>Post-production</h3><ul class="ilist"><li>Long-form editing (draft in 3–7 business days)</li><li>Short-form editing for all platforms</li><li>Subtitles on all content</li><li>Up to 2 revision rounds (long-form)</li><li>Up to 1 revision round (short-form)</li></ul></div>
+    <div class="iblock anim d3"><h3>Strategy</h3><ul class="ilist"><li>Monthly content plan & topic calendar</li><li>Creative direction per episode</li><li>SEO optimisation (titles, descriptions)</li><li>Thumbnail & title recommendations</li><li>Monthly analytics review</li></ul></div>
+    <div class="iblock anim d4"><h3>Platform management</h3><ul class="ilist"><li>YouTube upload & optimisation</li><li>Instagram Reels</li><li>TikTok</li><li>YouTube Shorts</li><li>Posting schedule coordination</li></ul></div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- PRICING -->
+<section>
+  <span class="stag anim">ONAIR STUDIO · Investment</span>
+  <h2 class="stitle anim d1">One flat monthly<br>retainer.</h2>
+  <p class="ssub anim d2">No hidden fees. No per-video charges. One number, the full system.</p>
+  <div class="pwrap">
+    <div class="pcard anim-scale">
+      <div class="pamount"><sup>$</sup>3,000</div>
+      <div class="pperiod">per calendar month</div>
+      <p style="font-size:13px;color:#444;max-width:380px;margin:0 auto">Minimum commitment: 1 month. Studio dates and crew confirmed upon receipt of payment.</p>
+      <div class="popts">
+        <div class="popt"><h4>Option A — Full prepay</h4><p>100% before work begins. Studio booked immediately upon receipt.</p></div>
+        <div class="popt"><h4>Option B — Split payment</h4><p>Partial upfront deposit + remainder on agreed schedule.</p></div>
+      </div>
+      <p style="margin-top:28px;font-size:11px;color:#2a2a2a;letter-spacing:.04em">PT AIR STUDIO BALI · Bank Permata · Acc: 4144874612 · SWIFT: BBBAIDJA<br>IDR · USD · EUR · AUD</p>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- WORKFLOW -->
+<section>
+  <span class="stag anim">ONAIR STUDIO · How we start</span>
+  <h2 class="stitle anim d1">From first call<br>to first publish.</h2>
+  <div class="wlist">
+    <div class="witem anim d1"><div class="wnum">01</div><div class="wcontent"><h3>Discovery call</h3><p>Align on goals, target audience, key properties, and content strategy.</p></div></div>
+    <div class="witem anim d2"><div class="wnum">02</div><div class="wcontent"><h3>Agreement & signature</h3><p>Service contract signed. Scope, deliverables, and timelines locked in writing.</p></div></div>
+    <div class="witem anim d3"><div class="wnum">03</div><div class="wcontent"><h3>Payment & booking</h3><p>Studio days, crew, and equipment reserved upon payment confirmation.</p></div></div>
+    <div class="witem anim d4"><div class="wnum">04</div><div class="wcontent"><h3>Pre-production</h3><p>Content calendar built, topics approved, creative direction set.</p></div></div>
+    <div class="witem anim d5"><div class="wnum">05</div><div class="wcontent"><h3>Shoot days</h3><p>Studio sessions + location visits. Coordinated schedule, full crew on set.</p></div></div>
+    <div class="witem anim"><div class="wnum">06</div><div class="wcontent"><h3>Edit & approval</h3><p>Draft delivered in 3–7 business days. Feedback incorporated within 48h.</p></div></div>
+    <div class="witem anim d1"><div class="wnum">07</div><div class="wcontent"><h3>Publish & analyse</h3><p>Content goes live across all platforms. Monthly analytics reviewed together.</p></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <span class="cta-label anim">ONAIR STUDIO · Ready to start</span>
+  <h2 class="cta-title anim d1">Let's build your audience,<br>starting this month.</h2>
+  <p class="cta-sub anim d2">One call. That's all it takes.</p>
+  <a href="https://wa.me/6287858172545?text=Hi%20OnAir%20Studio!%20I%27d%20like%20to%20start%20building%20my%20content%20machine%20%F0%9F%8E%99" target="_blank" class="cta-btn anim d3">Get in touch</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div style="font-size:12px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:white;opacity:.2;margin-bottom:14px">ONAIR STUDIO</div>
+  <div class="footer-tag">Jl. Raya Kayu Tulang No.18, Canggu, Bali, Indonesia</div>
+  <div class="footer-links">
+    <a href="mailto:airstudiobali@gmail.com">airstudiobali@gmail.com</a>
+    <a href="tel:+628785817254">+62 878 5817 2545</a>
+  </div>
+  <div class="footer-copy">PT Air Studio Bali · Prepared for Ellen McDonald · Confidential</div>
+</div>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    } else {
+      e.target.classList.remove('visible');
+    }
+  });
+}, {threshold: 0.1, rootMargin: '0px 0px -30px 0px'});
+
+document.querySelectorAll('.anim, .anim-scale').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
